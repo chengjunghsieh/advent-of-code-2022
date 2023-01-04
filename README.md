@@ -1,3 +1,19 @@
-# advent-of-code-2022
+Advent of Code 2022
+===
 
-https://adventofcode.com/2022
+# Day 18
+Part 1
+算表面積
+
+Part 2
+不計算容器內部的表面積。
+從不屬於容器的任一點開始bfs,計算接觸到容器的次數。
+
+# Day 21
+Part 2
+解一元一次方程式。
+注意：題目限制、浮點數問題
+
+# Day 22
+Part 2
+給立方體的平面圖上，模擬在立方體上行走。
