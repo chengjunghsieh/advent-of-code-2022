@@ -31,7 +31,7 @@ def solve(blueprint, max_time, current_max)
   max_bot = blueprint.map{|i| i.to_a}.transpose.map{|i| i.max}
   max_bot[-1] = 10000000 # random large number
 
-  dp = ->(time, robots, minerals, dp) {
+  dfs = ->(time, robots, minerals, dfs) {
     # p [time, blueprint, robots, minerals]
     if time >= max_time
       return current_max
@@ -39,7 +39,7 @@ def solve(blueprint, max_time, current_max)
 
     # Optimization 1:
     # assume we could create a bot each minute (regardless of the minerals)
-    # if under such circumstances we can't exceed the current maxium than prune.
+    # if under such circumstances we can't exceed the current maxium then prune.
     time_remain = max_time - time
     if minerals.to_a.last + robots.to_a.last * time_remain + (time_remain - 1) * time_remain / 2 <= current_max
       return 0
@@ -69,13 +69,13 @@ def solve(blueprint, max_time, current_max)
       else
         new_robots = robots + I[i]
         new_minerals = minerals + robots * (time_need + 1) - b
-        dp.(time + time_need + 1, robots + I[i], minerals + robots * (time_need + 1) - b, dp)
+        dfs.(time + time_need + 1, robots + I[i], minerals + robots * (time_need + 1) - b, dfs)
       end
     }.max
   }
   robots = Vector[1, 0, 0, 0] # ore, clay, obsidian, geode
   minerals = Vector[0, 0, 0, 0]
-  dp.(0, robots, minerals, dp)
+  dfs.(0, robots, minerals, dfs)
 end
 
 p blueprints.each_with_index.map{|v, i|
